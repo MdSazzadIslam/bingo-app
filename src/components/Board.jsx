@@ -8,6 +8,7 @@ import "./Board.css";
 const Board = () => {
   const [tableLength, setTableLength] = useState(5);
   const [values, setValues] = useState([]);
+
   const [bingoArray, setBingoArray] = useState([
     [
       "child noises in the background",
@@ -73,17 +74,16 @@ const Board = () => {
     debugger;
     let newValue = [],
       tempValue;
-    console.log(i);
 
     newValue.push(i);
     tempValue = values.concat(newValue);
     setValues(tempValue);
-    console.log(values, values.length);
-    if (values.length === 4) {
-      const isEqual = checkIsEqual(values); //checking all the number in an array are same or not
+    console.log(values, tempValue.length);
+    if (tempValue.length === 5) {
+      const isEqual = checkIsEqual(tempValue); //checking all the number in an array are same or not
 
       if (isEqual === false) {
-        const isSequential = checkIsSequential(values);
+        const isSequential = checkIsSequential(tempValue);
         if (isSequential === true) {
           toast.success("You are  winner", {
             position: toast.POSITION.BOTTOM_RIGHT,
@@ -91,7 +91,7 @@ const Board = () => {
             toastId: "001",
           });
         } else {
-          const isDecending = checkIsDecending(values);
+          const isDecending = checkIsDecending(tempValue);
           if (isDecending === true) {
             toast.success("You are  winner", {
               position: toast.POSITION.BOTTOM_RIGHT,
@@ -115,14 +115,16 @@ const Board = () => {
       }
 
       setValues("");
+      tempValue = "";
+      newValue = "";
     }
   };
 
   return (
     <div className="div_container">
       <div className="div_wrapper">
-        <table align="center" valign="middle">
-          <tbody className="board_table">
+        <table align="center" valign="middle" className="board_table">
+          <tbody>
             <Row
               tableLength={tableLength}
               bingoArray={bingoArray}
